@@ -21,10 +21,12 @@ package org.spoutcraft.launcher.entrypoint;
 import com.beust.jcommander.JCommander;
 import net.technicpack.launchercore.util.Directories;
 import net.technicpack.launchercore.util.OperatingSystem;
+import net.technicpack.launchercore.util.Settings;
 import net.technicpack.launchercore.util.Utils;
 import org.apache.commons.io.IOUtils;
 import org.spoutcraft.launcher.Launcher;
 import org.spoutcraft.launcher.StartupParameters;
+import org.spoutcraft.launcher.lang.LocalizationBundle;
 import org.spoutcraft.launcher.log.Console;
 import org.spoutcraft.launcher.log.DateOutputFormatter;
 import org.spoutcraft.launcher.log.LoggerOutputStream;
@@ -73,7 +75,10 @@ public class SpoutcraftLauncher {
 		MetalLookAndFeel.setCurrentTheme(new OceanTheme());
 		setLookAndFeel();
 
-		console = new Console(params.isConsole());
+		String languageCode = Settings.getLanguageCode();
+		LocalizationBundle uiText = new LocalizationBundle("org.spoutcraft.launcher.resources.UIText", languageCode);
+
+		console = new Console(params.isConsole(), uiText);
 		SpoutcraftLauncher.logger = setupLogger();
 		console.setRotatingFileHandler(SpoutcraftLauncher.handler);
 
@@ -87,7 +92,8 @@ public class SpoutcraftLauncher {
 		Runtime.getRuntime().addShutdownHook(new ShutdownThread(console));
 
 		// Set up the launcher and load login frame
-		Launcher launcher = new Launcher();
+		Launcher launcher = new Launcher(uiText);
+		errorDialog = new ErrorDialog(Launcher.getFrame(), uiText);
 
 		LoginFrame frame = Launcher.getLoginFrame();
 
@@ -151,15 +157,11 @@ public class SpoutcraftLauncher {
 				logger.log(Level.SEVERE, "Unhandled Exception in " + t, e);
 
 				if (errorDialog == null) {
-					LauncherFrame frame = null;
+					errorDialog = new ErrorDialog(null, new LocalizationBundle("org.spoutcraft.launcher.resources.UIText", "default"));
+				}
 
-					try {
-						frame = Launcher.getFrame();
-					} catch (Exception ex) {
-						//This can happen if we have a very early crash- before Launcher initializes
-					}
-
-					errorDialog = new ErrorDialog(frame, e);
+				if (!errorDialog.isVisible()) {
+					errorDialog.setError(e);
 					errorDialog.setVisible(true);
 				}
 			}
@@ -196,8 +198,8 @@ public class SpoutcraftLauncher {
 		temp.delete();
 	}
 
-	public static void setupConsole() {
-		console.setupConsole();
+	public static void setupConsole(LocalizationBundle uiText) {
+		console.setupConsole(uiText);
 	}
 
 	public static void destroyConsole() {

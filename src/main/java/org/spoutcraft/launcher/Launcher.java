@@ -59,10 +59,7 @@ public class Launcher implements PackRefreshListener {
 
 	private LinkedList<Thread> startupTasks = new LinkedList<Thread>();
 
-	public Launcher() {
-		String languageCode = Settings.getLanguageCode();
-		LocalizationBundle uiText = new LocalizationBundle("org.spoutcraft.launcher.resources.UIText", languageCode);
-
+	public Launcher(LocalizationBundle uiText) {
 		if (Launcher.instance != null) {
 			throw new IllegalArgumentException("You can't have a duplicate launcher");
 		}

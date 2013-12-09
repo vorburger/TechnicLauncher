@@ -23,6 +23,7 @@ import org.jdesktop.layout.LayoutStyle;
 import org.spoutcraft.launcher.Launcher;
 import net.technicpack.launchercore.util.Settings;
 import org.spoutcraft.launcher.entrypoint.SpoutcraftLauncher;
+import org.spoutcraft.launcher.lang.LocalizationBundle;
 import org.spoutcraft.launcher.util.DesktopUtils;
 import org.spoutcraft.launcher.util.PasteBinAPI;
 
@@ -48,8 +49,8 @@ public class ErrorDialog extends JDialog implements ActionListener {
 	private static final String REPORT_ACTION = "report";
 	private static final String PASTEBIN_URL = "http://pastebin.com";
 	private static final long serialVersionUID = 1L;
-	private final Throwable cause;
-	private final String selected;
+	private Throwable cause;
+	private String selected;
 	private JLabel titleLabel;
 	private JLabel exceptionLabel;
 	private JScrollPane scrollPane1;
@@ -57,17 +58,25 @@ public class ErrorDialog extends JDialog implements ActionListener {
 	private JButton reportButton;
 	private JButton closeButton;
 
-	public ErrorDialog(Frame owner, Throwable t) {
+	private LocalizationBundle uiTextLocalization;
+
+	public ErrorDialog(Frame owner, LocalizationBundle uiText) {
 		super(owner);
-		this.cause = t;
+		this.uiTextLocalization = uiText;
 		initComponents();
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(technicIcon));
-		populateException(this.cause);
+
 		reportButton.addActionListener(this);
 		reportButton.setActionCommand(REPORT_ACTION);
 		closeButton.addActionListener(this);
 		closeButton.setActionCommand(CLOSE_ACTION);
+	}
+
+	public void setError(Throwable t) {
+		this.cause = t;
+		populateException(this.cause);
+
 		String getSelected = null;
 		try {
 			getSelected = Launcher.getFrame().getSelector().getSelectedPack().getInfo().getDisplayName();
@@ -118,15 +127,15 @@ public class ErrorDialog extends JDialog implements ActionListener {
 		//======== this ========
 		setAlwaysOnTop(true);
 		setModal(true);
-		setTitle("Unexpected Error!");
+		setTitle(this.uiTextLocalization.getString("crashdialog.label.title"));
 		Container contentPane = getContentPane();
 
 		//---- titleLabel ----
-		titleLabel.setText("An unexpected error has occured - Please report to https://github.com/TechnicPack/TechnicLauncher/issues");
+		titleLabel.setText(this.uiTextLocalization.getString("crashdialog.label.top","https://github.com/TechnicPack/TechnicLauncher/issues"));
 		titleLabel.setFont(new Font("Arial", Font.PLAIN, 11));
 
 		//---- exceptionLabel ----
-		exceptionLabel.setText("Error:");
+		exceptionLabel.setText(this.uiTextLocalization.getString("crashdialog.label.error"));
 		exceptionLabel.setFont(new Font("Arial", Font.PLAIN, 11));
 
 		//======== scrollPane1 ========
@@ -135,11 +144,11 @@ public class ErrorDialog extends JDialog implements ActionListener {
 		}
 
 		//---- reportButton ----
-		reportButton.setText("Generate Report");
+		reportButton.setText(this.uiTextLocalization.getString("crashdialog.button.generate"));
 		reportButton.setFont(new Font("Arial", Font.PLAIN, 11));
 
 		//---- closeButton ----
-		closeButton.setText("Close Application");
+		closeButton.setText(this.uiTextLocalization.getString("crashdialog.button.close"));
 		closeButton.setFont(new Font("Arial", Font.PLAIN, 11));
 
 		GroupLayout contentPaneLayout = new GroupLayout(contentPane);

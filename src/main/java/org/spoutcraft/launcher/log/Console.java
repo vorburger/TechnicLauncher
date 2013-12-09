@@ -20,15 +20,16 @@ package org.spoutcraft.launcher.log;
 
 import net.technicpack.launchercore.util.Settings;
 import net.technicpack.launchercore.util.Utils;
+import org.spoutcraft.launcher.lang.LocalizationBundle;
 import org.spoutcraft.launcher.skin.ConsoleFrame;
 
 public class Console {
 	private ConsoleFrame frame = null;
 	private RotatingFileHandler handler = null;
 
-	public Console(boolean isConsole) {
+	public Console(boolean isConsole, LocalizationBundle uiText) {
 		if (isConsole || Settings.getShowConsole()) {
-			setupConsole();
+			setupConsole(uiText);
 			Utils.getLogger().info("Console Mode Activated");
 		}
 
@@ -36,11 +37,11 @@ public class Console {
 		logThread.start();
 	}
 
-	public void setupConsole() {
+	public void setupConsole(LocalizationBundle uiText) {
 		if (frame != null) {
 			frame.dispose();
 		}
-		frame = new ConsoleFrame(2500, true);
+		frame = new ConsoleFrame(2500, true, uiText);
 		frame.setVisible(true);
 	}
 
