@@ -119,7 +119,7 @@ public class ModpackOptions extends JDialog implements ActionListener, MouseList
 
 		JLabel optionsTitle = new JLabel();
 		optionsTitle.setBounds(10, 10, FRAME_WIDTH, 25);
-		optionsTitle.setText(installedPack.getDisplayName() + " Options");
+		optionsTitle.setText(this.uiTextLocalization.getString("modpackoptions.label.optionstitle", installedPack.getDisplayName()));
 		optionsTitle.setForeground(Color.white);
 		optionsTitle.setFont(minecraft.deriveFont(14F));
 
@@ -131,7 +131,7 @@ public class ModpackOptions extends JDialog implements ActionListener, MouseList
 
 		buildLabel = new JLabel();
 		buildLabel.setBounds(10, 50, 140, 25);
-		buildLabel.setText("Select Build");
+		buildLabel.setText(this.uiTextLocalization.getString("modpackoptions.label.selectbuild"));
 		buildLabel.setForeground(Color.white);
 		buildLabel.setFont(minecraft);
 
@@ -148,7 +148,7 @@ public class ModpackOptions extends JDialog implements ActionListener, MouseList
 
 		ButtonGroup group = new ButtonGroup();
 
-		JRadioButton versionRec = new JRadioButton("Always use recommended builds");
+		JRadioButton versionRec = new JRadioButton(this.uiTextLocalization.getString("modpackoptions.button.alwaysrec"));
 		versionRec.setBounds(10, buildLabel.getY() + buildLabel.getHeight() + 10, FRAME_WIDTH - 20, 30);
 		versionRec.setFont(minecraft);
 		versionRec.setForeground(Color.white);
@@ -157,7 +157,7 @@ public class ModpackOptions extends JDialog implements ActionListener, MouseList
 		versionRec.addActionListener(this);
 		group.add(versionRec);
 
-		JRadioButton versionLatest = new JRadioButton("Always use latest builds");
+		JRadioButton versionLatest = new JRadioButton(this.uiTextLocalization.getString("modpackoptions.button.alwayslatest"));
 		versionLatest.setBounds(10, versionRec.getY() + versionRec.getHeight(), FRAME_WIDTH - 20, 30);
 		versionLatest.setFont(minecraft);
 		versionLatest.setForeground(Color.white);
@@ -166,7 +166,7 @@ public class ModpackOptions extends JDialog implements ActionListener, MouseList
 		versionLatest.addActionListener(this);
 		group.add(versionLatest);
 
-		JRadioButton versionManual = new JRadioButton("Manually select a build");
+		JRadioButton versionManual = new JRadioButton(this.uiTextLocalization.getString("modpackoptions.button.manuallyselect"));
 		versionManual.setBounds(10, versionLatest.getY() + versionLatest.getHeight(), FRAME_WIDTH - 20, 30);
 		versionManual.setFont(minecraft);
 		versionManual.setForeground(Color.white);
@@ -214,13 +214,13 @@ public class ModpackOptions extends JDialog implements ActionListener, MouseList
 		fileChooser = new JFileChooser(Utils.getLauncherDirectory());
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-		LiteButton changeFolder = new LiteButton("Change Folder");
+		LiteButton changeFolder = new LiteButton(this.uiTextLocalization.getString("modpackoptions.button.changefolder"));
 		changeFolder.setBounds(FRAME_WIDTH / 2 + 10, packLocation.getY() + packLocation.getHeight() + 10, FRAME_WIDTH / 2 - 20, 25);
 		changeFolder.setFont(minecraft);
 		changeFolder.setActionCommand(CHANGEFOLDER_ACTION);
 		changeFolder.addActionListener(this);
 
-		openFolder = new LiteButton("Open Folder");
+		openFolder = new LiteButton(this.uiTextLocalization.getString("modpackoptions.button.openfolder"));
 		openFolder.setBounds(10, packLocation.getY() + packLocation.getHeight() + 10, FRAME_WIDTH / 2 - 20, 25);
 		openFolder.setFont(minecraft);
 		openFolder.setActionCommand(OPENFOLDER_ACTION);
@@ -230,13 +230,13 @@ public class ModpackOptions extends JDialog implements ActionListener, MouseList
 			openFolder.setVisible(false);
 		}
 
-		LiteButton save = new LiteButton("Save");
+		LiteButton save = new LiteButton(this.uiTextLocalization.getString("modpackoptions.button.save"));
 		save.setFont(minecraft.deriveFont(14F));
 		save.setBounds(FRAME_WIDTH / 2 + 10, FRAME_HEIGHT - 40, FRAME_WIDTH / 2 - 20, 25);
 		save.setActionCommand(SAVE_ACTION);
 		save.addActionListener(this);
 
-		cleanBin = new LiteButton("Reset Pack");
+		cleanBin = new LiteButton(this.uiTextLocalization.getString("modpackoptions.button.resetpack"));
 		cleanBin.setFont(minecraft.deriveFont(14F));
 		cleanBin.setBounds(10, FRAME_HEIGHT - 40, FRAME_WIDTH / 2 - 20, 25);
 		cleanBin.setActionCommand(CLEAN_BIN_ACTION);
@@ -270,9 +270,9 @@ public class ModpackOptions extends JDialog implements ActionListener, MouseList
 				System.out.println(installedPack.getInfo());
 				String display = build;
 				if (build.equals(installedPack.getInfo().getLatest())) {
-					display += " - Latest";
+					display += " - " + this.uiTextLocalization.getString("modpackoptions.label.latest");
 				} else if (build.equals(installedPack.getInfo().getRecommended())) {
-					display += " - Recommended";
+					display += " - " + this.uiTextLocalization.getString("modpackoptions.label.recommended");
 				}
 				BuildLabel label = new BuildLabel(build, display);
 				buildSelector.addItem(label);
@@ -330,7 +330,7 @@ public class ModpackOptions extends JDialog implements ActionListener, MouseList
 			if (result == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
 				if (!ZipUtils.checkEmpty(file)) {
-					JOptionPane.showMessageDialog(c, "Please select an empty directory.", "Invalid Location", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(c, this.uiTextLocalization.getString("modpackoptions.dialog.emptydir"), this.uiTextLocalization.getString("modpackoptions.dialog.invalidloc"), JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 				packLocation.setText(file.getPath());
@@ -341,7 +341,7 @@ public class ModpackOptions extends JDialog implements ActionListener, MouseList
 				}
 			}
 		} else if (action.equals(CLEAN_BIN_ACTION)) {
-			int result = JOptionPane.showConfirmDialog(c, "Are you sure you want to reset this pack?", "Remove Pack", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+			int result = JOptionPane.showConfirmDialog(c, this.uiTextLocalization.getString("modpackoptions.dialog.reset"), this.uiTextLocalization.getString("modpackoptions.dialog.removepack"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 			if (result == JOptionPane.YES_OPTION) {
 				cleanBin();
 				dispose();
