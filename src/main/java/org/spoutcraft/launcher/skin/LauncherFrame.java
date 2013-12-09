@@ -163,7 +163,7 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 		logout.setHorizontalAlignment(SwingConstants.RIGHT);
 		logout.setHorizontalTextPosition(SwingConstants.RIGHT);
 		logout.setForeground(Color.white);
-		logout.setBounds(userArea.getX() + 133, userArea.getY() + 32, 60, 30);
+		logout.setBounds(userArea.getX() + 5, userArea.getY() + 32, 185, 30);
 		logout.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		logout.setActionCommand(LOGOUT);
 		logout.addActionListener(this);

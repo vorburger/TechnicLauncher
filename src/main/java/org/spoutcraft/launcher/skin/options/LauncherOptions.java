@@ -62,7 +62,7 @@ import net.technicpack.launchercore.util.LaunchAction;
 
 public class LauncherOptions extends JDialog implements ActionListener, MouseListener, MouseMotionListener {
 	private static final long serialVersionUID = 1L;
-	private static final int FRAME_WIDTH = 350;
+	private static final int FRAME_WIDTH = 370;
 	private static final int FRAME_HEIGHT = 330;
 	private static final String QUIT_ACTION = "quit";
 	private static final String SAVE_ACTION = "save";
@@ -180,7 +180,7 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 		memoryLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		memory = new JComboBox();
-		memory.setBounds(memoryLabel.getX() + memoryLabel.getWidth() + 10, memoryLabel.getY(), 155, 20);
+		memory.setBounds(memoryLabel.getX() + memoryLabel.getWidth() + 10, memoryLabel.getY(), 175, 20);
 		populateMemory(memory);
 
 		JLabel onLaunchLabel = new JLabel(this.uiTextLocalization.getString("launcheroptions.label.onlaunch"));
@@ -190,7 +190,7 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 		onLaunchLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		onLaunch = new JComboBox();
-		onLaunch.setBounds(onLaunchLabel.getX() + onLaunchLabel.getWidth() + 10, onLaunchLabel.getY(), 155, 20);
+		onLaunch.setBounds(onLaunchLabel.getX() + onLaunchLabel.getWidth() + 10, onLaunchLabel.getY(), 175, 20);
 		populateOnLaunch(onLaunch);
 
 		JLabel languageLabel = new JLabel(this.uiTextLocalization.getString("launcheroptions.label.language"));
@@ -200,7 +200,7 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 		languageLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		languages = new JComboBox();
-		languages.setBounds(languageLabel.getX() + languageLabel.getWidth()+10, languageLabel.getY(), 155, 20);
+		languages.setBounds(languageLabel.getX() + languageLabel.getWidth()+10, languageLabel.getY(), 175, 20);
 		populateLanguages();
 
 		installedDirectory = Settings.getDirectory();

@@ -41,6 +41,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
@@ -130,13 +131,14 @@ public class ModpackOptions extends JDialog implements ActionListener, MouseList
 		optionsQuit.addActionListener(this);
 
 		buildLabel = new JLabel();
-		buildLabel.setBounds(10, 50, 140, 25);
+		buildLabel.setBounds(10, 50, FRAME_WIDTH - 170, 25);
 		buildLabel.setText(this.uiTextLocalization.getString("modpackoptions.label.selectbuild"));
 		buildLabel.setForeground(Color.white);
 		buildLabel.setFont(minecraft);
+		buildLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		buildSelector = new JComboBox();
-		buildSelector.setBounds(FRAME_WIDTH / 2, 50, 140, 25);
+		buildSelector.setBounds(FRAME_WIDTH - 150, 50, 140, 25);
 		buildSelector.setActionCommand(BUILD_ACTION);
 		buildSelector.addActionListener(this);
 		populateBuilds(buildSelector);
