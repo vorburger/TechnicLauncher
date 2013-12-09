@@ -134,17 +134,17 @@ public class ImportOptions extends JDialog implements ActionListener, MouseListe
 
 		msgLabel = new JLabel();
 		msgLabel.setBounds(10, 75, FRAME_WIDTH - 20, 25);
-		msgLabel.setText("Enter your Technic Platform delivery URL below to add a new pack:");
+		msgLabel.setText(this.uiTextLocalization.getString("import.label.enterurl"));
 		msgLabel.setForeground(Color.white);
 		msgLabel.setFont(minecraft);
 
-		urlTextBox = new LiteTextBox(this, "Paste Platform URL Here");
+		urlTextBox = new LiteTextBox(this, this.uiTextLocalization.getString("import.textbox.pasteurl"));
 		urlTextBox.setBounds(10, msgLabel.getY() + msgLabel.getHeight() + 5, FRAME_WIDTH - 115, 30);
 		urlTextBox.setFont(minecraft);
 		urlTextBox.getDocument().addDocumentListener(this);
 		urlDoc = urlTextBox.getDocument();
 
-		save = new LiteButton("Add Modpack");
+		save = new LiteButton(this.uiTextLocalization.getString("import.button.addmodpack"));
 		save.setFont(minecraft.deriveFont(14F));
 		save.setBounds(FRAME_WIDTH - 145, FRAME_HEIGHT - 40, 135, 30);
 		save.setActionCommand(IMPORT_ACTION);
@@ -153,13 +153,13 @@ public class ImportOptions extends JDialog implements ActionListener, MouseListe
 		fileChooser = new JFileChooser(Utils.getLauncherDirectory());
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-		folder = new LiteButton("Change Folder");
+		folder = new LiteButton(this.uiTextLocalization.getString("import.button.changefolder"));
 		folder.setFont(minecraft.deriveFont(14F));
 		folder.setBounds(FRAME_WIDTH - 290, FRAME_HEIGHT - 40, 135, 30);
 		folder.setActionCommand(CHANGE_FOLDER);
 		folder.addActionListener(this);
 
-		paste = new LiteButton("Paste");
+		paste = new LiteButton(this.uiTextLocalization.getString("import.button.paste"));
 		paste.setFont(minecraft.deriveFont(14F));
 		paste.setBounds(FRAME_WIDTH - 95, msgLabel.getY() + msgLabel.getHeight() + 5, 85, 30);
 		paste.setActionCommand(PASTE_URL);
@@ -205,18 +205,18 @@ public class ImportOptions extends JDialog implements ActionListener, MouseListe
 				File file = fileChooser.getSelectedFile();
 
 				if (!ZipUtils.checkEmpty(file)) {
-					install.setText("Please select an empty directory.");
+					install.setText(this.uiTextLocalization.getString("import.label.emptydirectory"));
 					return;
 				}
 
 				if (info.shouldForceDirectory() && file.getAbsolutePath().startsWith(Utils.getSettingsDirectory().getAbsolutePath())) {
-					install.setText("This pack requires a directory outside of " + Utils.getSettingsDirectory().getAbsolutePath());
+					install.setText(this.uiTextLocalization.getString("import.label.directoryoutside", Utils.getSettingsDirectory().getAbsolutePath()));
 					return;
 				}
 				installDir = file;
 
-				install.setText("Location: " + installDir.getPath());
-				folder.setText("Change Folder");
+				install.setText(this.uiTextLocalization.getString("import.label.location", installDir.getPath()));
+				folder.setText(this.uiTextLocalization.getString("import.button.changefolder"));
 				folder.setLocation(FRAME_WIDTH - 290, FRAME_HEIGHT - 40);
 				enableComponent(save, true);
 			}
@@ -255,7 +255,7 @@ public class ImportOptions extends JDialog implements ActionListener, MouseListe
 			final String url = doc.getText(0, doc.getLength()).trim();
 
 			if (url.isEmpty()) {
-				msgLabel.setText("Enter your Technic Platform delivery URL below to add a new pack:");
+				msgLabel.setText(this.uiTextLocalization.getString("import.label.enterurl"));
 				enableComponent(save, false);
 				enableComponent(folder, false);
 				enableComponent(install, false);
@@ -265,7 +265,7 @@ public class ImportOptions extends JDialog implements ActionListener, MouseListe
 			}
 
 			if (matchUrl(url)) {
-				msgLabel.setText("Attempting to fetch Modpack info...");
+				msgLabel.setText(this.uiTextLocalization.getString("import.label.attemptfetch"));
 				// Turn everything off while the data is being fetched
 				enableComponent(urlTextBox, false);
 				enableComponent(paste, false);
@@ -285,7 +285,7 @@ public class ImportOptions extends JDialog implements ActionListener, MouseListe
 						try {
 							PlatformPackInfo result = get();
 							if (!result.hasSolder() && !(result.getUrl().startsWith("http://") || result.getUrl().startsWith("https://"))) {
-								msgLabel.setText("Modpack has invalid download link. Consult modpack author.");
+								msgLabel.setText(uiTextLocalization.getString("import.label.invalidlink"));
 								return;
 							} else {
 								if (result.hasSolder()) {
@@ -295,22 +295,22 @@ public class ImportOptions extends JDialog implements ActionListener, MouseListe
 								}
 							}
 							System.out.println(info.getName());
-							msgLabel.setText("Modpack: " + info.getDisplayName());
+							msgLabel.setText(uiTextLocalization.getString("import.label.modpackname", info.getDisplayName()));
 							ImportOptions.this.url = url;
 							enableComponent(folder, true);
 							enableComponent(install, true);
 							if (info.shouldForceDirectory()) {
-								install.setText("This pack requires a directory outside of " + Utils.getSettingsDirectory().getAbsolutePath());
-								folder.setText("Select");
+								install.setText(uiTextLocalization.getString("import.label.directoryoutside", Utils.getSettingsDirectory().getAbsolutePath()));
+								folder.setText(uiTextLocalization.getString("import.label.select"));
 								folder.setLocation(FRAME_WIDTH - 145, FRAME_HEIGHT - 40);
 								enableComponent(save, false);
 							} else {
 								installDir = new File(Utils.getLauncherDirectory(), info.getName());
-								install.setText("Location: " + installDir.getPath());
+								install.setText(uiTextLocalization.getString("import.label.location", installDir.getPath()));
 								enableComponent(save, true);
 							}
 						} catch (ExecutionException e) {
-							msgLabel.setText("Error parsing platform response");
+							msgLabel.setText(uiTextLocalization.getString("import.label.errorparsing"));
 							enableComponent(save, false);
 							enableComponent(folder, false);
 							enableComponent(install, false);
@@ -322,7 +322,7 @@ public class ImportOptions extends JDialog implements ActionListener, MouseListe
 							e.printStackTrace();
 						} catch (IOException e) {
 							e.printStackTrace();
-							msgLabel.setText("Modpack has invalid solder link. Consult modpack author.");
+							msgLabel.setText(uiTextLocalization.getString("import.label.invalidlink"));
 						} finally {
 							// always turn these back on
 							enableComponent(urlTextBox, true);
@@ -332,7 +332,7 @@ public class ImportOptions extends JDialog implements ActionListener, MouseListe
 				};
 				worker.execute();
 			} else {
-				msgLabel.setText("Invalid Technic Platform delivery URL");
+				msgLabel.setText(this.uiTextLocalization.getString("import.label.invalidlink"));
 				enableComponent(save, false);
 				enableComponent(folder, false);
 				enableComponent(install, false);

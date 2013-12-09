@@ -131,7 +131,7 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 		RoundedBox launchArea = new RoundedBox(TRANSPARENT);
 		launchArea.setBounds(605, 375, 265, 50);
 
-		launch = new LiteButton("PLAY");
+		launch = new LiteButton(this.uiTextLocalization.getString("launcher.button.play"));
 		launch.setFont(getMinecraftFont(20));
 		launch.setBounds(launchArea.getX()+5, launchArea.getY()+5, launchArea.getWidth()-10, launchArea.getHeight()-10);
 		launch.setActionCommand(LAUNCH_ACTION);
@@ -156,7 +156,7 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 		loggedInMsg.setBounds(userArea.getX() + 5, userArea.getY() + 8, 185, 30);
 		loggedInMsg.setForeground(Color.white);
 
-		logout = new LiteButton("Log Out", new Color(0,0,0,0), new Color(0,0,0,0), new Color(0,0,0,0), Color.white, Color.white, Color.white);
+		logout = new LiteButton(this.uiTextLocalization.getString("launcher.button.logout"), new Color(0,0,0,0), new Color(0,0,0,0), new Color(0,0,0,0), Color.white, Color.white, Color.white);
 		logout.setFont(minecraft);
 		logout.setOpaque(false);
 		logout.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -217,7 +217,7 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 
 		// Browse link
 		JButton browse = new ImageHyperlinkButton("http://www.technicpack.net");
-		browse.setToolTipText("Get More Modpacks");
+		browse.setToolTipText(this.uiTextLocalization.getString("launcher.label.getmore"));
 		browse.setBounds(linkArea.getX() + SPACING, linkArea.getY() + SPACING, linkWidth, linkHeight);
 		browse.setIcon(ResourceUtils.getIcon("platformLinkButton.png"));
 		browse.setRolloverIcon(ResourceUtils.getIcon("platformLinkButtonBright.png"));
@@ -226,7 +226,7 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 
 		// Forums link
 		JButton forums = new ImageHyperlinkButton("http://forums.technicpack.net/");
-		forums.setToolTipText("Visit the forums");
+		forums.setToolTipText(this.uiTextLocalization.getString("launcher.label.forums"));
 		forums.setBounds(linkArea.getX() + SPACING, browse.getY() + browse.getHeight() + SPACING, linkWidth, linkHeight);
 		forums.setIcon(ResourceUtils.getIcon("forumsLinkButton.png"));
 		forums.setRolloverIcon(ResourceUtils.getIcon("forumsLinkButtonBright.png"));
@@ -235,7 +235,7 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 
 		// Donate link
 		JButton donate = new ImageHyperlinkButton("http://www.technicpack.net/donate/");
-		donate.setToolTipText("Donate to the modders");
+		donate.setToolTipText(this.uiTextLocalization.getString("launcher.label.donate"));
 		donate.setBounds(linkArea.getX() + SPACING, forums.getY() + forums.getHeight() + SPACING, linkWidth, linkHeight);
 		donate.setIcon(ResourceUtils.getIcon("donateLinkButton.png"));
 		donate.setRolloverIcon(ResourceUtils.getIcon("donateLinkButtonBright.png"));
@@ -275,28 +275,28 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 		// Steam button
 		JButton steam = new ImageHyperlinkButton("http://steamcommunity.com/groups/technic-pack");
 		steam.setRolloverIcon(ResourceUtils.getIcon("steamInverted.png", 28, 28));
-		steam.setToolTipText("Game with us on Steam");
+		steam.setToolTipText(this.uiTextLocalization.getString("launcher.tooltip.steam"));
 		steam.setBounds(215 + 6, 6, 28, 28);
 		setIcon(steam, "steam.png", 28);
 
 		// Twitter button
 		JButton twitter = new ImageHyperlinkButton("https://twitter.com/TechnicPack");
 		twitter.setRolloverIcon(ResourceUtils.getIcon("twitterInverted.png", 28, 28));
-		twitter.setToolTipText("Follow us on Twitter");
+		twitter.setToolTipText(this.uiTextLocalization.getString("launcher.tooltip.twitter"));
 		twitter.setBounds(215 + 6 + 34 * 3, 6, 28, 28);
 		setIcon(twitter, "twitter.png", 28);
 
 		// Facebook button
 		JButton facebook = new ImageHyperlinkButton("https://www.facebook.com/TechnicPack");
 		facebook.setRolloverIcon(ResourceUtils.getIcon("facebookInverted.png", 28, 28));
-		facebook.setToolTipText("Like us on Facebook");
+		facebook.setToolTipText(this.uiTextLocalization.getString("launcher.tooltip.facebook"));
 		facebook.setBounds(215 + 6 + 34 * 2, 6, 28, 28);
 		setIcon(facebook, "facebook.png", 28);
 
 		// YouTube button
 		JButton youtube = new ImageHyperlinkButton("http://www.youtube.com/user/kakermix");
 		youtube.setRolloverIcon(ResourceUtils.getIcon("youtubeInverted.png", 28, 28));
-		youtube.setToolTipText("Subscribe to our videos");
+		youtube.setToolTipText(this.uiTextLocalization.getString("launcher.tooltip.youtube"));
 		youtube.setBounds(215 + 6 + 34, 6, 28, 28);
 		setIcon(youtube, "youtube.png", 28);
 
@@ -471,11 +471,11 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 	public void lockLoginButton(boolean unlock) {
 		if (unlock) {
 			if (currentUser != null && currentUser.isOffline())
-				launch.setText("PLAY OFFLINE");
+				launch.setText(this.uiTextLocalization.getString("launcher.button.playoffline"));
 			else
-				launch.setText("PLAY");
+				launch.setText(this.uiTextLocalization.getString("launcher.button.play"));
 		} else {
-			launch.setText("LAUNCHING...");
+			launch.setText(this.uiTextLocalization.getString("launcher.button.launching"));
 		}
 		launch.setEnabled(unlock);
 		packRemoveBtn.setEnabled(unlock);
