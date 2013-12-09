@@ -31,6 +31,8 @@ import org.spoutcraft.launcher.skin.options.ImportOptions;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -56,31 +58,35 @@ public class ModpackSelector extends JComponent implements ActionListener {
 	private ImportOptions importOptions = null;
 	private LocalizationBundle uiTextLocalization;
 
-	public ModpackSelector(LauncherFrame frame, LocalizationBundle uiText) {
+	public ModpackSelector(LauncherFrame frame, Font minecraftSmall, Font minecraftBig, LocalizationBundle uiText) {
 		this.uiTextLocalization = uiText;
 
 		this.frame = frame;
 
 		for (int i = 0; i < 7; i++) {
 			PackButton button = new PackButton();
+			button.setForeground(Color.WHITE);
 			buttons.add(button);
 			JLabel label = button.getJLabel();
 			JLabel icon = button.getDisconnectedIcon();
 			button.setActionCommand(PACK_SELECT_ACTION);
 			button.addActionListener(this);
 			if (i == 3) {
+				button.setFont(minecraftBig);
 				button.setBounds(bigX, bigY, bigWidth, bigHeight);
 				label.setBounds(bigX, bigY + bigHeight - 24, bigWidth, 24);
 				icon.setBounds(bigX + bigWidth-80, bigY, 80, 17);
 				label.setFont(label.getFont().deriveFont(14F));
 				button.setIndex(0);
 			} else if (i < 3) {
+				button.setFont(minecraftSmall);
 				int smallY = bigY - (spacing * 2) - ((smallHeight + spacing) * (i + 1));
 				button.setBounds(smallX, smallY, smallWidth, smallHeight);
 				label.setBounds(smallX, smallY + smallHeight - 20, smallWidth, 20);
 				icon.setBounds(smallX + smallWidth-80, smallY, 80, 17);
 				button.setIndex((i + 1) * -1);
 			} else if (i > 3) {
+				button.setFont(minecraftSmall);
 				int smallY = bigY + bigHeight + ((smallHeight + spacing) * (i - 4)) + (spacing * 3);
 				button.setBounds(smallX, smallY, smallWidth, smallHeight);
 				label.setBounds(smallX, smallY + smallHeight - 20, smallWidth, 20);
@@ -128,7 +134,7 @@ public class ModpackSelector extends JComponent implements ActionListener {
 		frame.setTitle(displayName);
 
 		// Set the big button image in the middle
-		buttons.get(3).setPack(selected);
+		buttons.get(3).setPack(selected, this.uiTextLocalization);
 
 		// Set the URL for the platform button
 		String url = "http://www.technicpack.net/modpack/details/" + packName;
@@ -146,13 +152,13 @@ public class ModpackSelector extends JComponent implements ActionListener {
 		// Add the first 3 buttons to the left
 		for (int i = 0; i < 3; i++) {
 			InstalledPack pack = Launcher.getInstalledPacks().getPrevious(i + 1);
-			buttons.get(i).setPack(pack);
+			buttons.get(i).setPack(pack, this.uiTextLocalization);
 		}
 
 		// Add the last 3 buttons to the right
 		for (int i = 4; i < 7; i++) {
 			InstalledPack pack = Launcher.getInstalledPacks().getNext(i - 3);
-			buttons.get(i).setPack(pack);
+			buttons.get(i).setPack(pack, this.uiTextLocalization);
 		}
 
 		if (selected instanceof AddPack) {

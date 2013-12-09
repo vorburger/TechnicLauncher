@@ -126,6 +126,7 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 
 	private void initComponents() {
 		Font minecraft = getMinecraftFont(12);
+		Font minecraftAddPackBig = getMinecraftFont(17);
 
 		// Launch button area
 		RoundedBox launchArea = new RoundedBox(TRANSPARENT);
@@ -310,7 +311,7 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 		contentPane.setLayout(null);
 
 		// Pack Selector
-		packSelector = new ModpackSelector(this, uiTextLocalization);
+		packSelector = new ModpackSelector(this, minecraft, minecraftAddPackBig, uiTextLocalization);
 		packSelector.setBounds(15, 0, 200, 520);
 
 		// Custom Pack Name Label
