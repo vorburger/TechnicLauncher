@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.logging.Level;
 
 import net.technicpack.launchercore.exception.RestfulAPIException;
@@ -45,6 +46,7 @@ import net.technicpack.launchercore.util.DownloadUtils;
 import net.technicpack.launchercore.util.Utils;
 
 import org.spoutcraft.launcher.entrypoint.SpoutcraftLauncher;
+import org.spoutcraft.launcher.lang.LocalizationBundle;
 import org.spoutcraft.launcher.skin.LauncherFrame;
 import org.spoutcraft.launcher.skin.LoginFrame;
 
@@ -63,6 +65,8 @@ public class Launcher implements PackRefreshListener {
 	private LinkedList<Thread> startupTasks = new LinkedList<Thread>();
 
 	public Launcher() {
+		LocalizationBundle uiText = new LocalizationBundle("org.spoutcraft.launcher.resources.UIText", Locale.getDefault());
+
 		if (Launcher.instance != null) {
 			throw new IllegalArgumentException("You can't have a duplicate launcher");
 		}
@@ -83,8 +87,8 @@ public class Launcher implements PackRefreshListener {
 			installedPacks = new InstalledPacks();
 		}
 
-		this.launcherFrame = new LauncherFrame();
-		this.loginFrame = new LoginFrame();
+		this.launcherFrame = new LauncherFrame(uiText);
+		this.loginFrame = new LoginFrame(uiText);
 		this.assetInstaller = new ResourceInstaller();
 
 		loadDefaultPacks();

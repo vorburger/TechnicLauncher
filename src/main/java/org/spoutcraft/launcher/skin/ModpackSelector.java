@@ -24,6 +24,7 @@ import net.technicpack.launchercore.restful.solder.SolderPackInfo;
 import net.technicpack.launchercore.util.Utils;
 import org.apache.commons.io.FileUtils;
 import org.spoutcraft.launcher.Launcher;
+import org.spoutcraft.launcher.lang.LocalizationBundle;
 import org.spoutcraft.launcher.skin.components.PackButton;
 import org.spoutcraft.launcher.skin.options.ImportOptions;
 
@@ -53,8 +54,11 @@ public class ModpackSelector extends JComponent implements ActionListener {
 	private final int bigY = (height / 2) - (bigHeight / 2);
 	private final int smallX = 100 - (smallWidth / 2);
 	private ImportOptions importOptions = null;
+	private LocalizationBundle uiTextLocalization;
 
-	public ModpackSelector(LauncherFrame frame) {
+	public ModpackSelector(LauncherFrame frame, LocalizationBundle uiText) {
+		this.uiTextLocalization = uiText;
+
 		this.frame = frame;
 
 		for (int i = 0; i < 7; i++) {
@@ -222,7 +226,7 @@ public class ModpackSelector extends JComponent implements ActionListener {
 
 			if (button.getIndex() == 0 && getSelectedPack() instanceof AddPack) {
 				if (importOptions == null || !importOptions.isVisible()) {
-					importOptions = new ImportOptions();
+					importOptions = new ImportOptions(uiTextLocalization);
 					importOptions.setModal(true);
 					importOptions.setVisible(true);
 				}

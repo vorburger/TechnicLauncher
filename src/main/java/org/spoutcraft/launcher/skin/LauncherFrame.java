@@ -24,6 +24,7 @@ import net.technicpack.launchercore.util.DownloadListener;
 import net.technicpack.launchercore.util.ImageUtils;
 import net.technicpack.launchercore.util.ResourceUtils;
 import org.spoutcraft.launcher.Launcher;
+import org.spoutcraft.launcher.lang.LocalizationBundle;
 import org.spoutcraft.launcher.skin.components.BackgroundImage;
 import org.spoutcraft.launcher.skin.components.ImageButton;
 import org.spoutcraft.launcher.skin.components.ImageHyperlinkButton;
@@ -97,7 +98,11 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 	private User currentUser = null;
 	private boolean hasLoadedHeads = false;
 
-	public LauncherFrame() {
+	private LocalizationBundle uiTextLocalization;
+
+	public LauncherFrame(LocalizationBundle uiText) {
+		this.uiTextLocalization = uiText;
+
 		initComponents();
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds((dim.width - FRAME_WIDTH) / 2, (dim.height - FRAME_HEIGHT) / 2, FRAME_WIDTH, FRAME_HEIGHT);
@@ -299,7 +304,7 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 		contentPane.setLayout(null);
 
 		// Pack Selector
-		packSelector = new ModpackSelector(this);
+		packSelector = new ModpackSelector(this, uiTextLocalization);
 		packSelector.setBounds(15, 0, 200, 520);
 
 		// Custom Pack Name Label
@@ -390,7 +395,7 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 	private void action(String action, JComponent c) {
 		if (action.equals(OPTIONS_ACTION)) {
 			if (launcherOptions == null || !launcherOptions.isVisible()) {
-				launcherOptions = new LauncherOptions();
+				launcherOptions = new LauncherOptions(uiTextLocalization);
 				launcherOptions.setModal(true);
 				launcherOptions.setVisible(true);
 			}
@@ -402,7 +407,7 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 		} else if (action.equals(PACK_OPTIONS_ACTION)) {
 			if (packOptions == null || !packOptions.isVisible()) {
 				System.out.println("Opening options for " + getSelector().getSelectedPack());
-				packOptions = new ModpackOptions(getSelector().getSelectedPack());
+				packOptions = new ModpackOptions(getSelector().getSelectedPack(), uiTextLocalization);
 				packOptions.setModal(true);
 				packOptions.setVisible(true);
 			}

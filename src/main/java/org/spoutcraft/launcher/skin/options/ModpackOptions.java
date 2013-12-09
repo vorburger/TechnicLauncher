@@ -21,6 +21,7 @@ package org.spoutcraft.launcher.skin.options;
 import net.technicpack.launchercore.install.InstalledPack;
 import net.technicpack.launchercore.util.ResourceUtils;
 import org.spoutcraft.launcher.Launcher;
+import org.spoutcraft.launcher.lang.LocalizationBundle;
 import org.spoutcraft.launcher.skin.LauncherFrame;
 import org.spoutcraft.launcher.skin.components.ImageButton;
 import org.spoutcraft.launcher.skin.components.LiteButton;
@@ -78,7 +79,11 @@ public class ModpackOptions extends JDialog implements ActionListener, MouseList
 	private boolean directoryChanged = false;
 	private int mouseX = 0, mouseY = 0;
 
-	public ModpackOptions(InstalledPack installedPack) {
+	private LocalizationBundle uiTextLocalization;
+
+	public ModpackOptions(InstalledPack installedPack, LocalizationBundle uiText) {
+		this.uiTextLocalization = uiText;
+
 		this.installedPack = installedPack;
 		setTitle("Modpack Options");
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
