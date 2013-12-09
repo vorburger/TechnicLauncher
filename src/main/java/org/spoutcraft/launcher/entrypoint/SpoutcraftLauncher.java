@@ -76,7 +76,7 @@ public class SpoutcraftLauncher {
 		setLookAndFeel();
 
 		String languageCode = Settings.getLanguageCode();
-		LocalizationBundle uiText = new LocalizationBundle("org.spoutcraft.launcher.resources.UIText", languageCode);
+		LocalizationBundle uiText = new LocalizationBundle("org.spoutcraft.launcher.resources.lang.UIText", languageCode);
 
 		console = new Console(params.isConsole(), uiText);
 		SpoutcraftLauncher.logger = setupLogger();
@@ -157,7 +157,7 @@ public class SpoutcraftLauncher {
 				logger.log(Level.SEVERE, "Unhandled Exception in " + t, e);
 
 				if (errorDialog == null) {
-					errorDialog = new ErrorDialog(null, new LocalizationBundle("org.spoutcraft.launcher.resources.UIText", "default"));
+					errorDialog = new ErrorDialog(null, new LocalizationBundle("org.spoutcraft.launcher.resources.lang.UIText", "default"));
 				}
 
 				if (!errorDialog.isVisible()) {
