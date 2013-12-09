@@ -21,9 +21,12 @@ package org.spoutcraft.launcher.skin.components;
 import net.technicpack.launchercore.install.AddPack;
 import net.technicpack.launchercore.install.InstalledPack;
 import net.technicpack.launchercore.util.ResourceUtils;
+import org.spoutcraft.launcher.lang.LocalizationBundle;
 import org.spoutcraft.launcher.skin.LauncherFrame;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -41,9 +44,12 @@ public class PackButton extends ImageButton {
 	private BufferedImage disconnectedImage;
 	private ImageIcon disconnectedIcon;
 	private JLabel disconnectedLabel;
+	private String titleText;
 
 	public PackButton() {
 		super();
+		titleText = null;
+
 		label = new JLabel("Loading...");
 		label.setFont(LauncherFrame.getMinecraftFont(12));
 		label.setForeground(Color.WHITE);
@@ -68,7 +74,7 @@ public class PackButton extends ImageButton {
 		}
 	}
 
-	public void setPack(InstalledPack pack) {
+	public void setPack(InstalledPack pack, LocalizationBundle uiText) {
 		setIcon(new ImageIcon(pack.getLogo().getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH)));
 
 		if (pack.isLocalOnly() || pack.getInfo() != null)
@@ -80,6 +86,12 @@ public class PackButton extends ImageButton {
 		{
 			label.setVisible((pack.getInfo() == null || !pack.hasLogo()) && !(pack instanceof AddPack));
 			disconnectedLabel.setVisible(false);
+		}
+
+		if (pack instanceof  AddPack) {
+			this.setTitleText(uiText.getString("launcher.button.addpack"));
+		} else {
+			this.setTitleText(null);
 		}
 	}
 
@@ -107,5 +119,31 @@ public class PackButton extends ImageButton {
 
 	public int getIndex() {
 		return index;
+	}
+
+	public void setTitleText(String title) {
+		this.titleText = title;
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+
+		if (this.titleText == null) {
+			return;
+		}
+
+		Graphics2D g2d = (Graphics2D)g;
+
+		g2d.setColor(this.getForeground());
+		g2d.setFont(getFont());
+
+		int width = g2d.getFontMetrics().stringWidth(this.titleText);
+		int textHeight =  getFont().getSize();
+		int otherTextHeight = getFontMetrics(getFont()).getHeight();
+
+		textHeight = textHeight - (otherTextHeight-textHeight);
+		int height = getHeight() - 4;
+		g2d.drawString(this.titleText, (getWidth() - width) / 2, height);
 	}
 }
