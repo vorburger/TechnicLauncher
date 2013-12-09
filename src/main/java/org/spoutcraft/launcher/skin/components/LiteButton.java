@@ -25,6 +25,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
+import javax.swing.SwingConstants;
 
 public class LiteButton extends JButton implements MouseListener{
 	private static final long serialVersionUID = 1L;
@@ -75,7 +76,22 @@ public class LiteButton extends JButton implements MouseListener{
 
 		textHeight = textHeight - (otherTextHeight-textHeight);
 		int height = textHeight + (getHeight() - textHeight)/2;
-		g2d.drawString(getText(), (getWidth() - width) / 2, height);
+
+		int x = 0;
+
+		switch (this.getHorizontalTextPosition()) {
+			case SwingConstants.RIGHT:
+				x = getWidth() - width;
+				break;
+			case SwingConstants.LEFT:
+				x = 0;
+				break;
+			default:
+				x = (getWidth() - width)/2;
+				break;
+		}
+
+		g2d.drawString(getText(), x, height);
 		
 		g2d.setColor(old);
 	}
