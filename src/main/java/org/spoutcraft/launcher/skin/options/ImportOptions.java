@@ -73,7 +73,7 @@ public class ImportOptions extends JDialog implements ActionListener, MouseListe
 	private static final String CHANGE_FOLDER = "folder";
 	private static final String PASTE_URL = "paste";
 	private static final String ESCAPE_ACTION = "escape";
-	private static final int FRAME_WIDTH = 520;
+	private static final int FRAME_WIDTH = 580;
 	private static final int FRAME_HEIGHT = 222;
 
 	private JLabel msgLabel;
@@ -146,7 +146,7 @@ public class ImportOptions extends JDialog implements ActionListener, MouseListe
 
 		save = new LiteButton(this.uiTextLocalization.getString("import.button.addmodpack"));
 		save.setFont(minecraft.deriveFont(14F));
-		save.setBounds(FRAME_WIDTH - 145, FRAME_HEIGHT - 40, 135, 30);
+		save.setBounds(FRAME_WIDTH - 200, FRAME_HEIGHT - 40, 190, 30);
 		save.setActionCommand(IMPORT_ACTION);
 		save.addActionListener(this);
 
@@ -155,7 +155,7 @@ public class ImportOptions extends JDialog implements ActionListener, MouseListe
 
 		folder = new LiteButton(this.uiTextLocalization.getString("import.button.changefolder"));
 		folder.setFont(minecraft.deriveFont(14F));
-		folder.setBounds(FRAME_WIDTH - 290, FRAME_HEIGHT - 40, 135, 30);
+		folder.setBounds(FRAME_WIDTH - 390, FRAME_HEIGHT - 40, 180, 30);
 		folder.setActionCommand(CHANGE_FOLDER);
 		folder.addActionListener(this);
 

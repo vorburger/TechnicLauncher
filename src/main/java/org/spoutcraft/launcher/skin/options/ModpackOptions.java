@@ -54,7 +54,7 @@ import java.io.File;
 
 public class ModpackOptions extends JDialog implements ActionListener, MouseListener, MouseMotionListener {
 	private static final long serialVersionUID = 1L;
-	private static final int FRAME_WIDTH = 300;
+	private static final int FRAME_WIDTH = 340;
 	private static final int FRAME_HEIGHT = 300;
 	private static final String QUIT_ACTION = "quit";
 	private static final String SAVE_ACTION = "save";
@@ -215,13 +215,13 @@ public class ModpackOptions extends JDialog implements ActionListener, MouseList
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
 		LiteButton changeFolder = new LiteButton(this.uiTextLocalization.getString("modpackoptions.button.changefolder"));
-		changeFolder.setBounds(FRAME_WIDTH / 2 + 10, packLocation.getY() + packLocation.getHeight() + 10, FRAME_WIDTH / 2 - 20, 25);
+		changeFolder.setBounds(FRAME_WIDTH / 2 + 25, packLocation.getY() + packLocation.getHeight() + 10, FRAME_WIDTH / 2 - 35, 25);
 		changeFolder.setFont(minecraft);
 		changeFolder.setActionCommand(CHANGEFOLDER_ACTION);
 		changeFolder.addActionListener(this);
 
 		openFolder = new LiteButton(this.uiTextLocalization.getString("modpackoptions.button.openfolder"));
-		openFolder.setBounds(10, packLocation.getY() + packLocation.getHeight() + 10, FRAME_WIDTH / 2 - 20, 25);
+		openFolder.setBounds(10, packLocation.getY() + packLocation.getHeight() + 10, FRAME_WIDTH / 2 + 10, 25);
 		openFolder.setFont(minecraft);
 		openFolder.setActionCommand(OPENFOLDER_ACTION);
 		openFolder.addActionListener(this);
@@ -232,13 +232,13 @@ public class ModpackOptions extends JDialog implements ActionListener, MouseList
 
 		LiteButton save = new LiteButton(this.uiTextLocalization.getString("modpackoptions.button.save"));
 		save.setFont(minecraft.deriveFont(14F));
-		save.setBounds(FRAME_WIDTH / 2 + 10, FRAME_HEIGHT - 40, FRAME_WIDTH / 2 - 20, 25);
+		save.setBounds(FRAME_WIDTH / 2 + 25, FRAME_HEIGHT - 40, FRAME_WIDTH / 2 - 35, 25);
 		save.setActionCommand(SAVE_ACTION);
 		save.addActionListener(this);
 
 		cleanBin = new LiteButton(this.uiTextLocalization.getString("modpackoptions.button.resetpack"));
 		cleanBin.setFont(minecraft.deriveFont(14F));
-		cleanBin.setBounds(10, FRAME_HEIGHT - 40, FRAME_WIDTH / 2 - 20, 25);
+		cleanBin.setBounds(10, FRAME_HEIGHT - 40, FRAME_WIDTH / 2 + 10, 25);
 		cleanBin.setActionCommand(CLEAN_BIN_ACTION);
 		cleanBin.addActionListener(this);
 

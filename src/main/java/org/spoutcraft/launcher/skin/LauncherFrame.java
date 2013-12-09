@@ -513,9 +513,9 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 			return;
 
 		if (currentUser.isOffline())
-			launch.setText("PLAY OFFLINE");
+			launch.setText(this.uiTextLocalization.getString("launcher.button.playoffline"));
 		else
-			launch.setText("PLAY");
+			launch.setText(this.uiTextLocalization.getString("launcher.button.play"));
 
 		loggedInMsg.setText(currentUser.getDisplayName());
 
