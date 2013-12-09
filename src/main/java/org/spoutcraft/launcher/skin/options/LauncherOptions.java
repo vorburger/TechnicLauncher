@@ -133,7 +133,7 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 
 		JLabel title = new JLabel(this.uiTextLocalization.getString("launcheroptions.label.title"));
 		title.setFont(minecraft.deriveFont(14F));
-		title.setBounds(50, 10, 200, 20);
+		title.setBounds(50, 10, FRAME_WIDTH-100, 20);
 		title.setForeground(Color.WHITE);
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 
