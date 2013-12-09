@@ -216,7 +216,9 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 		int linkHeight = (linkArea.getHeight() - (SPACING * 4)) / 3;
 
 		// Browse link
-		JButton browse = new ImageHyperlinkButton("http://www.technicpack.net");
+		JButton browse = new ImageHyperlinkButton("http://www.technicpack.net", this.uiTextLocalization.getString("launcher.label.getmore"));
+		browse.setForeground(Color.WHITE);
+		browse.setFont(minecraft);
 		browse.setToolTipText(this.uiTextLocalization.getString("launcher.label.getmore"));
 		browse.setBounds(linkArea.getX() + SPACING, linkArea.getY() + SPACING, linkWidth, linkHeight);
 		browse.setIcon(ResourceUtils.getIcon("platformLinkButton.png"));
@@ -225,7 +227,9 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 		browse.setBorderPainted(false);
 
 		// Forums link
-		JButton forums = new ImageHyperlinkButton("http://forums.technicpack.net/");
+		JButton forums = new ImageHyperlinkButton("http://forums.technicpack.net/", this.uiTextLocalization.getString("launcher.label.forums"));
+		forums.setForeground(Color.WHITE);
+		forums.setFont(minecraft);
 		forums.setToolTipText(this.uiTextLocalization.getString("launcher.label.forums"));
 		forums.setBounds(linkArea.getX() + SPACING, browse.getY() + browse.getHeight() + SPACING, linkWidth, linkHeight);
 		forums.setIcon(ResourceUtils.getIcon("forumsLinkButton.png"));
@@ -234,7 +238,9 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 		forums.setBorderPainted(false);
 
 		// Donate link
-		JButton donate = new ImageHyperlinkButton("http://www.technicpack.net/donate/");
+		JButton donate = new ImageHyperlinkButton("http://www.technicpack.net/donate/", this.uiTextLocalization.getString("launcher.label.donate"));
+		donate.setForeground(Color.WHITE);
+		donate.setFont(minecraft);
 		donate.setToolTipText(this.uiTextLocalization.getString("launcher.label.donate"));
 		donate.setBounds(linkArea.getX() + SPACING, forums.getY() + forums.getHeight() + SPACING, linkWidth, linkHeight);
 		donate.setIcon(ResourceUtils.getIcon("donateLinkButton.png"));
