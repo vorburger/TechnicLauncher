@@ -22,6 +22,7 @@ import net.technicpack.launchercore.util.ResourceUtils;
 import org.spoutcraft.launcher.Memory;
 import org.spoutcraft.launcher.entrypoint.SpoutcraftLauncher;
 import net.technicpack.launchercore.util.Settings;
+import org.spoutcraft.launcher.lang.LaunchActionLanguageWrapper;
 import org.spoutcraft.launcher.lang.LocalizationBundle;
 import org.spoutcraft.launcher.skin.LauncherFrame;
 import org.spoutcraft.launcher.skin.components.ImageButton;
@@ -347,7 +348,7 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 			int mem = Memory.memoryOptions[memory.getSelectedIndex()].getSettingsId();
 			Settings.setMemory(mem);
 			Settings.setBuildStream(buildStream);
-			Settings.setLaunchAction((LaunchAction)onLaunch.getSelectedItem());
+			Settings.setLaunchAction(((LaunchActionLanguageWrapper)onLaunch.getSelectedItem()).getAction());
 
 			boolean languageChanged = false;
 			if (saveLanguageIfNecessary()) {
@@ -427,15 +428,32 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 	}
 
 	private void populateOnLaunch(JComboBox onLaunch) {
-		onLaunch.addItem(LaunchAction.HIDE);
-		onLaunch.addItem(LaunchAction.CLOSE);
-		onLaunch.addItem(LaunchAction.NOTHING);
+		LaunchActionLanguageWrapper hide = new LaunchActionLanguageWrapper(LaunchAction.HIDE, this.uiTextLocalization);
+		LaunchActionLanguageWrapper close = new LaunchActionLanguageWrapper(LaunchAction.CLOSE, this.uiTextLocalization);
+		LaunchActionLanguageWrapper show = new LaunchActionLanguageWrapper(LaunchAction.NOTHING, this.uiTextLocalization);
+
+		onLaunch.addItem(hide);
+		onLaunch.addItem(close);
+		onLaunch.addItem(show);
 		LaunchAction selectedAction = Settings.getLaunchAction();
 		if (selectedAction == null) {
-			onLaunch.setSelectedItem(LaunchAction.HIDE);
+			onLaunch.setSelectedIndex(0);
 			Settings.setLaunchAction(LaunchAction.HIDE);
 		} else {
-			onLaunch.setSelectedItem(Settings.getLaunchAction());
+			LaunchActionLanguageWrapper toSelect = null;
+
+			switch (Settings.getLaunchAction()) {
+				case HIDE:
+					toSelect = hide;
+					break;
+				case CLOSE:
+					toSelect = close;
+					break;
+				default:
+					toSelect = show;
+					break;
+			}
+			onLaunch.setSelectedItem(toSelect);
 		}
 	}
 
