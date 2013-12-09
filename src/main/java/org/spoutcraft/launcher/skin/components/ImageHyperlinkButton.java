@@ -18,6 +18,9 @@
 
 package org.spoutcraft.launcher.skin.components;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
@@ -30,7 +33,14 @@ import org.spoutcraft.launcher.util.DesktopUtils;
 public class ImageHyperlinkButton extends JButton{
 	private static final long serialVersionUID = 1L;
 	private String url;
+	private String drawnOnTopText;
+
 	public ImageHyperlinkButton(String url) {
+		this(url, null);
+	}
+
+	public ImageHyperlinkButton(String url, String layeredText) {
+		this.drawnOnTopText = layeredText;
 		this.url = url;
 		this.addActionListener(new ButtonClickHandler());
 		setBorder(null);
@@ -50,6 +60,27 @@ public class ImageHyperlinkButton extends JButton{
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+
+		if (this.drawnOnTopText == null) {
+			return;
+		}
+
+		Graphics2D g2d = (Graphics2D)g;
+
+		g2d.setColor(this.getForeground());
+		g2d.setFont(getFont());
+
+		int textHeight =  getFont().getSize();
+		int otherTextHeight = getFontMetrics(getFont()).getHeight();
+
+		textHeight = textHeight - (otherTextHeight-textHeight);
+		int height = textHeight + (getHeight() - textHeight)/2;
+		g2d.drawString(drawnOnTopText, 40, height);
 	}
 
 	public void setURL(String url) {
