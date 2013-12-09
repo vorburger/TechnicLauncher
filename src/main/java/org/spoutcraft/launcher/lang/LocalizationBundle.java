@@ -23,9 +23,15 @@ import java.util.ResourceBundle;
 
 public class LocalizationBundle {
 	private ResourceBundle resourceBundle;
+	private String resourceName;
 
-	public LocalizationBundle(String resourceName, Locale locale) {
-		resourceBundle = ResourceBundle.getBundle(resourceName, locale);
+	public static final Locale[] SUPPORTED_LOCALES = { Locale.ENGLISH };
+	public static final String DEFAULT_LOCALE = "default";
+
+	public LocalizationBundle(String resourceName, String localeCode) {
+		this.resourceName = resourceName;
+
+		this.setLocale(this.getLocaleFromCode(localeCode));
 	}
 
 	public String getString(String stringKey, String... replacements) {
@@ -41,5 +47,80 @@ public class LocalizationBundle {
 		}
 
 		return outString;
+	}
+
+	public void setLocale(Locale locale) {
+		resourceBundle = ResourceBundle.getBundle(resourceName, locale);
+	}
+
+	public String getCodeFromLocale(Locale locale) {
+		if (locale.getLanguage().isEmpty()) {
+			return "default";
+		} else if (locale.getCountry().isEmpty()) {
+			return locale.getLanguage();
+		} else if (locale.getVariant().isEmpty()) {
+			return String.format("%s,%s",locale.getLanguage(),locale.getCountry());
+		} else {
+			return String.format("%s,%s,%s", locale.getLanguage(), locale.getCountry(), locale.getVariant());
+		}
+	}
+
+	public Locale getLocaleFromCode(String localeCode) {
+		if (localeCode == null || localeCode.isEmpty() || localeCode.equals(DEFAULT_LOCALE)) {
+			return Locale.getDefault();
+		}
+
+		String[] results = localeCode.split(",");
+		String language = "";
+		String country = "";
+		String variant = "";
+
+		if (results.length > 0) {
+			language = results[0];
+		}
+
+		if (results.length > 1) {
+			country = results[1];
+		}
+
+		if (results.length > 2) {
+			variant = results[2];
+		}
+
+		Locale definiteLocale = new Locale(language,country,variant);
+
+		return matchClosestSupportedLocale(definiteLocale);
+	}
+
+	private Locale matchClosestSupportedLocale(Locale definiteLocale) {
+		Locale bestSupportedLocale = null;
+		int bestLocaleScore = 0;
+		for (int i = 0; i < SUPPORTED_LOCALES.length; i++) {
+			Locale testLocale = SUPPORTED_LOCALES[i];
+			int testScore = 0;
+
+			if (testLocale.getLanguage().equals(definiteLocale.getLanguage())) {
+				testScore++;
+
+				if (testLocale.getCountry().equals(definiteLocale.getCountry())) {
+					testScore++;
+
+					if (testLocale.getVariant().equals(definiteLocale.getVariant())) {
+						testScore++;
+					}
+				}
+			}
+
+			if (testScore != 0 && testScore > bestLocaleScore) {
+				bestLocaleScore = testScore;
+				bestSupportedLocale = testLocale;
+			}
+		}
+
+		if (bestSupportedLocale != null) {
+			return bestSupportedLocale;
+		} else {
+			return Locale.getDefault();
+		}
 	}
 }

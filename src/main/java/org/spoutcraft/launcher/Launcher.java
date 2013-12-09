@@ -18,7 +18,6 @@
 
 package org.spoutcraft.launcher;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
@@ -41,17 +40,13 @@ import net.technicpack.launchercore.restful.solder.FullModpacks;
 import net.technicpack.launchercore.restful.solder.Solder;
 import net.technicpack.launchercore.restful.solder.SolderConstants;
 import net.technicpack.launchercore.restful.solder.SolderPackInfo;
-import net.technicpack.launchercore.util.Download;
-import net.technicpack.launchercore.util.DownloadUtils;
+import net.technicpack.launchercore.util.Settings;
 import net.technicpack.launchercore.util.Utils;
 
 import org.spoutcraft.launcher.entrypoint.SpoutcraftLauncher;
 import org.spoutcraft.launcher.lang.LocalizationBundle;
 import org.spoutcraft.launcher.skin.LauncherFrame;
 import org.spoutcraft.launcher.skin.LoginFrame;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
 
 public class Launcher implements PackRefreshListener {
 	private static Launcher instance;
@@ -65,7 +60,8 @@ public class Launcher implements PackRefreshListener {
 	private LinkedList<Thread> startupTasks = new LinkedList<Thread>();
 
 	public Launcher() {
-		LocalizationBundle uiText = new LocalizationBundle("org.spoutcraft.launcher.resources.UIText", Locale.getDefault());
+		String languageCode = Settings.getLanguageCode();
+		LocalizationBundle uiText = new LocalizationBundle("org.spoutcraft.launcher.resources.UIText", languageCode);
 
 		if (Launcher.instance != null) {
 			throw new IllegalArgumentException("You can't have a duplicate launcher");

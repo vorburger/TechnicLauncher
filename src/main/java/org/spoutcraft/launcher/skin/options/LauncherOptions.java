@@ -56,12 +56,14 @@ import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.lang.management.ManagementFactory;
 import java.lang.management.OperatingSystemMXBean;
+import java.util.Locale;
+
 import net.technicpack.launchercore.util.LaunchAction;
 
 public class LauncherOptions extends JDialog implements ActionListener, MouseListener, MouseMotionListener {
 	private static final long serialVersionUID = 1L;
 	private static final int FRAME_WIDTH = 300;
-	private static final int FRAME_HEIGHT = 300;
+	private static final int FRAME_HEIGHT = 330;
 	private static final String QUIT_ACTION = "quit";
 	private static final String SAVE_ACTION = "save";
 	private static final String LOGS_ACTION = "logs";
@@ -78,6 +80,7 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 	private JRadioButton beta;
 	private JRadioButton stable;
 	private JFileChooser fileChooser;
+	private JComboBox languages;
 	private LiteButton console;
 	private int mouseX = 0, mouseY = 0;
 	private String installedDirectory;
@@ -184,16 +187,26 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 		onLaunchLabel.setFont(minecraft);
 		onLaunchLabel.setBounds(10, memoryLabel.getY() + memoryLabel.getHeight() + 10, 125, 20);
 		onLaunchLabel.setForeground(Color.WHITE);
-		onLaunchLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		onLaunchLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		onLaunch = new JComboBox();
 		onLaunch.setBounds(onLaunchLabel.getX() + onLaunchLabel.getWidth() + 10, onLaunchLabel.getY(), 145, 20);
 		populateOnLaunch(onLaunch);
 
+		JLabel languageLabel = new JLabel(this.uiTextLocalization.getString("launcheroptions.label.language"));
+		languageLabel.setFont(minecraft);
+		languageLabel.setBounds(10, onLaunchLabel.getY() + onLaunchLabel.getHeight()+10, 125, 20);
+		languageLabel.setForeground(Color.white);
+		languageLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+
+		languages = new JComboBox();
+		languages.setBounds(languageLabel.getX() + languageLabel.getWidth()+10, languageLabel.getY(), 145, 20);
+		populateLanguages();
+
 		installedDirectory = Settings.getDirectory();
 
 		packLocation = new LiteTextBox(this, "");
-		packLocation.setBounds(10, onLaunchLabel.getY() + onLaunchLabel.getHeight() + 10, FRAME_WIDTH - 20, 25);
+		packLocation.setBounds(10, languageLabel.getY() + languageLabel.getHeight() + 10, FRAME_WIDTH - 20, 25);
 		packLocation.setFont(minecraft.deriveFont(10F));
 		packLocation.setText(installedDirectory);
 		packLocation.setEnabled(false);
@@ -243,6 +256,8 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 		contentPane.add(memoryLabel);
 		contentPane.add(onLaunch);
 		contentPane.add(onLaunchLabel);
+		contentPane.add(languageLabel);
+		contentPane.add(languages);
 		contentPane.add(save);
 		contentPane.add(background);
 
@@ -333,12 +348,18 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 			Settings.setMemory(mem);
 			Settings.setBuildStream(buildStream);
 			Settings.setLaunchAction((LaunchAction)onLaunch.getSelectedItem());
+
+			boolean languageChanged = false;
+			if (saveLanguageIfNecessary()) {
+				languageChanged = true;
+			}
+
 			if (directoryChanged) {
 				Settings.setMigrate(true);
 				Settings.setMigrateDir(installedDirectory);
 			}
 
-			if (directoryChanged || streamChanged) {
+			if (directoryChanged || streamChanged || languageChanged) {
 				JOptionPane.showMessageDialog(c, "A manual restart is required for changes to take effect. Please exit and restart your launcher.", "Restart Required", JOptionPane.INFORMATION_MESSAGE);
 				dispose();
 			}
@@ -416,6 +437,46 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 		} else {
 			onLaunch.setSelectedItem(Settings.getLaunchAction());
 		}
+	}
+
+	private void populateLanguages() {
+		languages.addItem(this.uiTextLocalization.getString("launcheroptions.dropdown.osdefaultlang"));
+
+		for (int i = 0; i < LocalizationBundle.SUPPORTED_LOCALES.length; i++) {
+			languages.addItem(LocalizationBundle.SUPPORTED_LOCALES[i].getDisplayName());
+		}
+
+		Locale closestLocale = this.uiTextLocalization.getLocaleFromCode(Settings.getLanguageCode());
+
+		int supportedIndex = -1;
+
+		for (int i = 0; i < LocalizationBundle.SUPPORTED_LOCALES.length; i++) {
+			if (closestLocale.equals(LocalizationBundle.SUPPORTED_LOCALES[i])) {
+				supportedIndex = i;
+				break;
+			}
+		}
+
+		languages.setSelectedIndex(supportedIndex+1);
+	}
+
+	private boolean saveLanguageIfNecessary() {
+		String currentLanguage = Settings.getLanguageCode();
+
+		String newLanguage = null;
+
+		if (languages.getSelectedIndex() == 0) {
+			newLanguage = "default";
+		} else {
+			newLanguage = this.uiTextLocalization.getCodeFromLocale(LocalizationBundle.SUPPORTED_LOCALES[languages.getSelectedIndex()-1]);
+		}
+
+		if (!newLanguage.equals(currentLanguage)) {
+			Settings.setLanguageCode(newLanguage);
+			return true;
+		}
+
+		return false;
 	}
 
 }
