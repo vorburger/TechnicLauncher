@@ -371,7 +371,7 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 			consoleToggle = !consoleToggle;
 			Settings.setShowConsole(consoleToggle);
 			if (consoleToggle) {
-				SpoutcraftLauncher.setupConsole();
+				SpoutcraftLauncher.setupConsole(this.uiTextLocalization);
 			} else {
 				SpoutcraftLauncher.destroyConsole();
 			}

@@ -19,6 +19,7 @@
 package org.spoutcraft.launcher.skin;
 
 import org.apache.commons.io.IOUtils;
+import org.spoutcraft.launcher.lang.LocalizationBundle;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
@@ -80,6 +81,7 @@ public class ConsoleFrame extends JFrame implements MouseListener {
 	private Document document;
 	private int numLines;
 	private boolean colorEnabled = false;
+	private LocalizationBundle uiTextLocalization;
 
 	/**
 	 * Construct the frame.
@@ -87,8 +89,8 @@ public class ConsoleFrame extends JFrame implements MouseListener {
 	 * @param numLines     number of lines to show at a time
 	 * @param colorEnabled true to enable a colored console
 	 */
-	public ConsoleFrame(int numLines, boolean colorEnabled) {
-		this(numLines, colorEnabled, null, false);
+	public ConsoleFrame(int numLines, boolean colorEnabled, LocalizationBundle uiText) {
+		this(numLines, colorEnabled, uiText,  null, false);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
@@ -100,8 +102,9 @@ public class ConsoleFrame extends JFrame implements MouseListener {
 	 * @param trackProc    process to track
 	 * @param killProcess  true to kill the process on console close
 	 */
-	public ConsoleFrame(int numLines, boolean colorEnabled, final Process trackProc, final boolean killProcess) {
-		super("Technic Launcher Console");
+	public ConsoleFrame(int numLines, boolean colorEnabled, LocalizationBundle uiText, final Process trackProc, final boolean killProcess) {
+		super(uiText.getString("console.label.title"));
+		this.uiTextLocalization = uiText;
 		this.numLines = numLines;
 		this.colorEnabled = colorEnabled;
 		this.trackProc = trackProc;
@@ -281,7 +284,7 @@ public class ConsoleFrame extends JFrame implements MouseListener {
 	}
 
 	private void doPop(MouseEvent e) {
-		ContextMenu menu = new ContextMenu();
+		ContextMenu menu = new ContextMenu(this.uiTextLocalization);
 		menu.show(e.getComponent(), e.getX(), e.getY());
 	}
 
@@ -324,8 +327,8 @@ public class ConsoleFrame extends JFrame implements MouseListener {
 		JMenuItem copy;
 		JMenuItem clear;
 
-		public ContextMenu() {
-			copy = new JMenuItem("Copy");
+		public ContextMenu(LocalizationBundle uiText) {
+			copy = new JMenuItem(uiText.getString("console.menu.copy"));
 			add(copy);
 			copy.addActionListener(new ActionListener() {
 				@Override
@@ -334,7 +337,7 @@ public class ConsoleFrame extends JFrame implements MouseListener {
 				}
 			});
 
-			clear = new JMenuItem("Clear");
+			clear = new JMenuItem(uiText.getString("console.menu.clear"));
 			add(clear);
 			clear.addActionListener(new ActionListener() {
 				@Override
