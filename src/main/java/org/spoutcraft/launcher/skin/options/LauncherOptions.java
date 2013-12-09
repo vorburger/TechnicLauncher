@@ -360,7 +360,7 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 			}
 
 			if (directoryChanged || streamChanged || languageChanged) {
-				JOptionPane.showMessageDialog(c, "A manual restart is required for changes to take effect. Please exit and restart your launcher.", "Restart Required", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(c, this.uiTextLocalization.getString("launcheroptions.dialog.restarttext"), this.uiTextLocalization.getString("launcheroptions.dialog.restarttitle"), JOptionPane.INFORMATION_MESSAGE);
 				dispose();
 			}
 			dispose();

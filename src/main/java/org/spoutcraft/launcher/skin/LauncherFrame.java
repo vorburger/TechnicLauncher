@@ -407,7 +407,11 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 				launcherOptions.setVisible(true);
 			}
 		} else if (action.equals(PACK_REMOVE_ACTION)) {
-			int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to remove this pack?\n This will delete all files in: " + getSelector().getSelectedPack().getInstalledDirectory(), "Remove Pack", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+			int result = JOptionPane.showConfirmDialog(this,
+					String.format("%s\n%s",this.uiTextLocalization.getString("modpackoptions.dialog.removetext1"),this.uiTextLocalization.getString("modpackoptions.dialog.removetext2",getSelector().getSelectedPack().getInstalledDirectory().getAbsolutePath())),
+					this.uiTextLocalization.getString("modpackoptions.dialog.removepack"),
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.WARNING_MESSAGE);
 			if (result == JOptionPane.YES_OPTION) {
 				getSelector().removePack();
 			}
