@@ -7,6 +7,7 @@ import net.technicpack.launchercore.exception.AuthenticationNetworkFailureExcept
 import net.technicpack.launchercore.install.User;
 import net.technicpack.launchercore.util.ResourceUtils;
 import org.spoutcraft.launcher.Launcher;
+import org.spoutcraft.launcher.lang.LocalizationBundle;
 import org.spoutcraft.launcher.skin.components.*;
 
 import javax.swing.*;
@@ -41,6 +42,8 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 
 	private ImageButton closeButton;
 
+	private LocalizationBundle uiTextLocalization;
+
 	private int dragGripX;
 	private int dragGripY;
 
@@ -52,7 +55,9 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 	private static final String CHANGE_USER = "change_user";
 	private static final String TOGGLE_REMEMBER = "remember";
 
-	public LoginFrame() {
+	public LoginFrame(LocalizationBundle uiText) {
+		this.uiTextLocalization = uiText;
+
 		//UI Setup
 		initComponents();
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -115,12 +120,12 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 		LauncherFrame.setIcon(platformImage, "platform_logo.png", 305, 56);
 		platformImage.setBounds(21, 21, 305, 56);
 
-		instructionText = new JLabel("Please login using your Minecraft account");
+		instructionText = new JLabel(this.uiTextLocalization.getString("login.label.instructions"));
 		instructionText.setFont(smallFont);
 		instructionText.setBounds(28, 80, FRAME_WIDTH - 50, 30);
 		instructionText.setForeground(Color.white);
 
-		nameLabel = new JLabel("Username");
+		nameLabel = new JLabel(this.uiTextLocalization.getString("login.label.username"));
 		nameLabel.setFont(largeFont);
 		nameLabel.setBounds(25, 110, FRAME_WIDTH - 60, 30);
 		nameLabel.setForeground(Color.white);
@@ -149,7 +154,7 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 		name.setFont(largeFont);
 		name.addKeyListener(this);
 
-		passLabel = new JLabel("Password");
+		passLabel = new JLabel(this.uiTextLocalization.getString("login.label.password"));
 		passLabel.setFont(largeFont);
 		passLabel.setBounds(25, 175, FRAME_WIDTH - 60, 30);
 		passLabel.setForeground(Color.white);
@@ -164,7 +169,7 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 		pass.setActionCommand(LOGIN_ACTION);
 
 		// "Remember this account"
-		rememberAccount = new JCheckBox("Remember this account", false);
+		rememberAccount = new JCheckBox(this.uiTextLocalization.getString("login.checkbox.remember"), false);
 		rememberAccount.setFont(smallFont);
 		rememberAccount.setForeground(Color.white);
 		rememberAccount.setOpaque(false);
@@ -177,7 +182,7 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 		rememberAccount.addKeyListener(this);
 
 		//Login button
-		login = new BlueButton("LOGIN");
+		login = new BlueButton(this.uiTextLocalization.getString("login.button.login"));
 		login.setFont(veryLargeFont);
 		login.setBounds(25, 290, FRAME_WIDTH - 50, 40);
 		login.setActionCommand(LOGIN_ACTION);
@@ -190,14 +195,14 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 		dash.setBounds((FRAME_WIDTH / 2) - 2, 375, 20, 20);
 
 		//Terms of Service
-		tosLink = new HyperlinkJLabel("Terms of Service", "http://www.technicpack.net/terms");
+		tosLink = new HyperlinkJLabel(this.uiTextLocalization.getString("login.hyperlink.terms"), "http://www.technicpack.net/terms");
 		tosLink.setFont(verySmallFont);
 		tosLink.setForeground(Color.white);
 		tosLink.setBounds(dash.getX() - 105, dash.getY(), 105, 20);
 		tosLink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		//Privacy Policy
-		privacyPolicy = new HyperlinkJLabel("Privacy Policy", "http://www.technicpack.net/privacy");
+		privacyPolicy = new HyperlinkJLabel(this.uiTextLocalization.getString("login.hyperlink.privacy"), "http://www.technicpack.net/privacy");
 		privacyPolicy.setFont(verySmallFont);
 		privacyPolicy.setForeground(Color.white);
 		privacyPolicy.setBounds(dash.getX() + 10, dash.getY(), 85, 20);

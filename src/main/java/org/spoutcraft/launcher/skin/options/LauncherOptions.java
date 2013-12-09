@@ -22,6 +22,7 @@ import net.technicpack.launchercore.util.ResourceUtils;
 import org.spoutcraft.launcher.Memory;
 import org.spoutcraft.launcher.entrypoint.SpoutcraftLauncher;
 import net.technicpack.launchercore.util.Settings;
+import org.spoutcraft.launcher.lang.LocalizationBundle;
 import org.spoutcraft.launcher.skin.LauncherFrame;
 import org.spoutcraft.launcher.skin.components.ImageButton;
 import org.spoutcraft.launcher.skin.components.LiteButton;
@@ -61,7 +62,6 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 	private static final long serialVersionUID = 1L;
 	private static final int FRAME_WIDTH = 300;
 	private static final int FRAME_HEIGHT = 300;
-	private static final String LAUNCHER_PREPEND = "Launcher Build:    ";
 	private static final String QUIT_ACTION = "quit";
 	private static final String SAVE_ACTION = "save";
 	private static final String LOGS_ACTION = "logs";
@@ -87,7 +87,11 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 	private boolean consoleToggle = false;
 	private String buildStream = "stable";
 
-	public LauncherOptions() {
+	private LocalizationBundle uiTextLocalization;
+
+	public LauncherOptions(LocalizationBundle uiText) {
+		this.uiTextLocalization = uiText;
+
 		setTitle("Launcher Options");
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		addMouseListener(this);
@@ -129,7 +133,7 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 		title.setForeground(Color.WHITE);
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 
-		build = new JLabel(LAUNCHER_PREPEND + SpoutcraftLauncher.getLauncherBuild());
+		build = new JLabel(uiTextLocalization.getString("modpackoptions.label.build", SpoutcraftLauncher.getLauncherBuild()));
 		build.setBounds(15, title.getY() + title.getHeight() + 10, FRAME_WIDTH - 20, 20);
 		build.setFont(minecraft);
 		build.setForeground(Color.WHITE);
@@ -366,11 +370,11 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 			}
 		} else if (action.equals(BETA_ACTION)) {
 			buildStream = Settings.BETA;
-			build.setText(LAUNCHER_PREPEND + getLatestLauncherBuild(buildStream));
+			build.setText(uiTextLocalization.getString("modpackoptions.label.build", Integer.toString(getLatestLauncherBuild(buildStream))));
 			streamChanged = true;
 		} else if (action.equals(STABLE_ACTION)) {
 			buildStream = Settings.STABLE;
-			build.setText(LAUNCHER_PREPEND + getLatestLauncherBuild(buildStream));
+			build.setText(uiTextLocalization.getString("modpackoptions.label.build", Integer.toString(getLatestLauncherBuild(buildStream))));
 			streamChanged = true;
 		}
 

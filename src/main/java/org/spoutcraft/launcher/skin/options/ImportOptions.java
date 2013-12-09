@@ -57,6 +57,7 @@ import net.technicpack.launchercore.restful.platform.PlatformPackInfo;
 import net.technicpack.launchercore.restful.solder.SolderPackInfo;
 import net.technicpack.launchercore.util.ResourceUtils;
 import org.spoutcraft.launcher.Launcher;
+import org.spoutcraft.launcher.lang.LocalizationBundle;
 import org.spoutcraft.launcher.skin.LauncherFrame;
 import org.spoutcraft.launcher.skin.components.ImageButton;
 import org.spoutcraft.launcher.skin.components.LiteButton;
@@ -88,8 +89,11 @@ public class ImportOptions extends JDialog implements ActionListener, MouseListe
 	private Document urlDoc;
 	private File installDir;
 	private LiteTextBox urlTextBox;
+	private LocalizationBundle uiTextLocalization;
 
-	public ImportOptions() {
+	public ImportOptions(LocalizationBundle uiText) {
+		this.uiTextLocalization = uiText;
+
 		setTitle("Add a Pack");
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		addMouseListener(this);
