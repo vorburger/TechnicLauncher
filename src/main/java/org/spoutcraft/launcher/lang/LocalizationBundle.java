@@ -25,7 +25,7 @@ public class LocalizationBundle {
 	private ResourceBundle resourceBundle;
 	private String resourceName;
 
-	public static final Locale[] SUPPORTED_LOCALES = { Locale.ENGLISH };
+	public static final Locale[] SUPPORTED_LOCALES = { Locale.ENGLISH, Locale.GERMAN };
 	public static final String DEFAULT_LOCALE = "default";
 
 	public LocalizationBundle(String resourceName, String localeCode) {

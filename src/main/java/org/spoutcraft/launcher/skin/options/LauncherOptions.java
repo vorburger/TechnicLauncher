@@ -62,7 +62,7 @@ import net.technicpack.launchercore.util.LaunchAction;
 
 public class LauncherOptions extends JDialog implements ActionListener, MouseListener, MouseMotionListener {
 	private static final long serialVersionUID = 1L;
-	private static final int FRAME_WIDTH = 300;
+	private static final int FRAME_WIDTH = 350;
 	private static final int FRAME_HEIGHT = 330;
 	private static final String QUIT_ACTION = "quit";
 	private static final String SAVE_ACTION = "save";
@@ -175,32 +175,32 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 
 		JLabel memoryLabel = new JLabel(this.uiTextLocalization.getString("launcheroptions.label.memory"));
 		memoryLabel.setFont(minecraft);
-		memoryLabel.setBounds(10, beta.getY() + beta.getHeight() + 10, 65, 20);
+		memoryLabel.setBounds(10, beta.getY() + beta.getHeight() + 10, 165, 20);
 		memoryLabel.setForeground(Color.WHITE);
-		memoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		memoryLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		memory = new JComboBox();
-		memory.setBounds(memoryLabel.getX() + memoryLabel.getWidth() + 10, memoryLabel.getY(), 100, 20);
+		memory.setBounds(memoryLabel.getX() + memoryLabel.getWidth() + 10, memoryLabel.getY(), 155, 20);
 		populateMemory(memory);
 
 		JLabel onLaunchLabel = new JLabel(this.uiTextLocalization.getString("launcheroptions.label.onlaunch"));
 		onLaunchLabel.setFont(minecraft);
-		onLaunchLabel.setBounds(10, memoryLabel.getY() + memoryLabel.getHeight() + 10, 125, 20);
+		onLaunchLabel.setBounds(10, memoryLabel.getY() + memoryLabel.getHeight() + 10, 165, 20);
 		onLaunchLabel.setForeground(Color.WHITE);
 		onLaunchLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		onLaunch = new JComboBox();
-		onLaunch.setBounds(onLaunchLabel.getX() + onLaunchLabel.getWidth() + 10, onLaunchLabel.getY(), 145, 20);
+		onLaunch.setBounds(onLaunchLabel.getX() + onLaunchLabel.getWidth() + 10, onLaunchLabel.getY(), 155, 20);
 		populateOnLaunch(onLaunch);
 
 		JLabel languageLabel = new JLabel(this.uiTextLocalization.getString("launcheroptions.label.language"));
 		languageLabel.setFont(minecraft);
-		languageLabel.setBounds(10, onLaunchLabel.getY() + onLaunchLabel.getHeight()+10, 125, 20);
+		languageLabel.setBounds(10, onLaunchLabel.getY() + onLaunchLabel.getHeight()+10, 165, 20);
 		languageLabel.setForeground(Color.white);
 		languageLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		languages = new JComboBox();
-		languages.setBounds(languageLabel.getX() + languageLabel.getWidth()+10, languageLabel.getY(), 145, 20);
+		languages.setBounds(languageLabel.getX() + languageLabel.getWidth()+10, languageLabel.getY(), 155, 20);
 		populateLanguages();
 
 		installedDirectory = Settings.getDirectory();
@@ -212,7 +212,7 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 		packLocation.setEnabled(false);
 
 		LiteButton changeFolder = new LiteButton(this.uiTextLocalization.getString("launcheroptions.button.changefolder"));
-		changeFolder.setBounds(FRAME_WIDTH / 2 + 5, packLocation.getY() + packLocation.getHeight() + 10, FRAME_WIDTH / 2 - 15, 25);
+		changeFolder.setBounds(10, packLocation.getY() + packLocation.getHeight() + 10, FRAME_WIDTH / 2 + 10, 25);
 		changeFolder.setFont(minecraft);
 		changeFolder.setActionCommand(CHANGEFOLDER_ACTION);
 		changeFolder.addActionListener(this);
@@ -220,21 +220,21 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 
 		logs = new LiteButton(this.uiTextLocalization.getString("launcheroptions.button.logs"));
 		logs.setFont(minecraft.deriveFont(14F));
-		logs.setBounds(10, packLocation.getY() + packLocation.getHeight() + 10, FRAME_WIDTH / 2 - 15, 25);
+		logs.setBounds(FRAME_WIDTH / 2 + 30, packLocation.getY() + packLocation.getHeight() + 10, FRAME_WIDTH / 2 - 40, 25);
 		logs.setForeground(Color.WHITE);
 		logs.setActionCommand(LOGS_ACTION);
 		logs.addActionListener(this);
 
 		LiteButton save = new LiteButton(this.uiTextLocalization.getString("launcheroptions.button.save"));
 		save.setFont(minecraft.deriveFont(14F));
-		save.setBounds(FRAME_WIDTH / 2 + 5, logs.getY() + logs.getHeight() + 10, FRAME_WIDTH / 2 - 15, 25);
+		save.setBounds(FRAME_WIDTH / 2 + 30, logs.getY() + logs.getHeight() + 10, FRAME_WIDTH / 2 - 40, 25);
 		save.setActionCommand(SAVE_ACTION);
 		save.addActionListener(this);
 
 		consoleToggle = Settings.getShowConsole();
 		console = new LiteButton(consoleToggle ? this.uiTextLocalization.getString("launcheroptions.button.consolehide") : this.uiTextLocalization.getString("launcheroptions.button.consoleshow"));
 		console.setFont(minecraft.deriveFont(14F));
-		console.setBounds(10, logs.getY() + logs.getHeight() + 10, FRAME_WIDTH / 2 - 15, 25);
+		console.setBounds(10, logs.getY() + logs.getHeight() + 10, FRAME_WIDTH / 2 + 10, 25);
 		console.setForeground(Color.WHITE);
 		console.setActionCommand(CONSOLE_ACTION);
 		console.addActionListener(this);
@@ -375,7 +375,7 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 			} else {
 				SpoutcraftLauncher.destroyConsole();
 			}
-			console.setText(consoleToggle ? "Hide Console" : "Show Console");
+			console.setText(consoleToggle ? this.uiTextLocalization.getString("launcheroptions.button.consolehide") : this.uiTextLocalization.getString("launcheroptions.button.consoleshow"));
 		} else if (action.equals(CHANGEFOLDER_ACTION)) {
 			int result = fileChooser.showOpenDialog(this);
 
@@ -443,7 +443,7 @@ public class LauncherOptions extends JDialog implements ActionListener, MouseLis
 		languages.addItem(this.uiTextLocalization.getString("launcheroptions.dropdown.osdefaultlang"));
 
 		for (int i = 0; i < LocalizationBundle.SUPPORTED_LOCALES.length; i++) {
-			languages.addItem(LocalizationBundle.SUPPORTED_LOCALES[i].getDisplayName());
+			languages.addItem(LocalizationBundle.SUPPORTED_LOCALES[i].getDisplayName(LocalizationBundle.SUPPORTED_LOCALES[i]));
 		}
 
 		Locale closestLocale = this.uiTextLocalization.getLocaleFromCode(Settings.getLanguageCode());

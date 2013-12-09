@@ -30,7 +30,7 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 	private BlueButton login;
 	private JLabel background;
 	private JLabel platformImage;
-	private JLabel instructionText;
+	private JTextArea instructionText;
 	private JCheckBox rememberAccount;
 
 	private UserCellRenderer userRenderer;
@@ -120,14 +120,19 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 		LauncherFrame.setIcon(platformImage, "platform_logo.png", 305, 56);
 		platformImage.setBounds(21, 21, 305, 56);
 
-		instructionText = new JLabel(this.uiTextLocalization.getString("login.label.instructions"));
+		instructionText = new JTextArea(this.uiTextLocalization.getString("login.label.instructions"));
 		instructionText.setFont(smallFont);
-		instructionText.setBounds(28, 80, FRAME_WIDTH - 50, 30);
+		instructionText.setBounds(28, 80, FRAME_WIDTH - 50, 60);
+		instructionText.setLineWrap(true);
+		instructionText.setEditable(false);
+		instructionText.setFocusable(false);
+		instructionText.setOpaque(false);
+		instructionText.setWrapStyleWord(true);
 		instructionText.setForeground(Color.white);
 
 		nameLabel = new JLabel(this.uiTextLocalization.getString("login.label.username"));
 		nameLabel.setFont(largeFont);
-		nameLabel.setBounds(25, 110, FRAME_WIDTH - 60, 30);
+		nameLabel.setBounds(25, 120, FRAME_WIDTH - 60, 30);
 		nameLabel.setForeground(Color.white);
 
 		// Setup username box
@@ -137,7 +142,7 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 			nameSelect.setUI(new MetalComboBoxUI());
 		}
 
-		nameSelect.setBounds(25, 140, 297, 32);
+		nameSelect.setBounds(25, 150, 297, 32);
 		nameSelect.setFont(largeFont);
 		nameSelect.setEditable(true);
 		nameSelect.setVisible(false);
@@ -150,18 +155,18 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 		nameSelect.setActionCommand(CHANGE_USER);
 
 		name = new JTextField();
-		name.setBounds(25, 140, 297, 30);
+		name.setBounds(25, 150, 297, 30);
 		name.setFont(largeFont);
 		name.addKeyListener(this);
 
 		passLabel = new JLabel(this.uiTextLocalization.getString("login.label.password"));
 		passLabel.setFont(largeFont);
-		passLabel.setBounds(25, 175, FRAME_WIDTH - 60, 30);
+		passLabel.setBounds(25, 185, FRAME_WIDTH - 60, 30);
 		passLabel.setForeground(Color.white);
 
 		// Setup password box
 		pass = new JPasswordField();
-		pass.setBounds(25, 205, 297, 30);
+		pass.setBounds(25, 215, 297, 30);
 		pass.setFont(largeFont);
 		pass.addKeyListener(this);
 		pass.setEchoChar('*');
@@ -173,7 +178,7 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 		rememberAccount.setFont(smallFont);
 		rememberAccount.setForeground(Color.white);
 		rememberAccount.setOpaque(false);
-		rememberAccount.setBounds(25, 245, 300, 30);
+		rememberAccount.setBounds(25, 255, 300, 30);
 		rememberAccount.setHorizontalTextPosition(SwingConstants.LEFT);
 		rememberAccount.setHorizontalAlignment(SwingConstants.RIGHT);
 		rememberAccount.setIconTextGap(12);
@@ -184,7 +189,7 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 		//Login button
 		login = new BlueButton(this.uiTextLocalization.getString("login.button.login"));
 		login.setFont(veryLargeFont);
-		login.setBounds(25, 290, FRAME_WIDTH - 50, 40);
+		login.setBounds(25, 300, FRAME_WIDTH - 50, 40);
 		login.setActionCommand(LOGIN_ACTION);
 		login.addActionListener(this);
 
@@ -198,14 +203,15 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 		tosLink = new HyperlinkJLabel(this.uiTextLocalization.getString("login.hyperlink.terms"), "http://www.technicpack.net/terms");
 		tosLink.setFont(verySmallFont);
 		tosLink.setForeground(Color.white);
-		tosLink.setBounds(dash.getX() - 105, dash.getY(), 105, 20);
+		tosLink.setBounds(dash.getX() - 165, dash.getY(), 160, 20);
 		tosLink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		tosLink.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		//Privacy Policy
 		privacyPolicy = new HyperlinkJLabel(this.uiTextLocalization.getString("login.hyperlink.privacy"), "http://www.technicpack.net/privacy");
 		privacyPolicy.setFont(verySmallFont);
 		privacyPolicy.setForeground(Color.white);
-		privacyPolicy.setBounds(dash.getX() + 10, dash.getY(), 85, 20);
+		privacyPolicy.setBounds(dash.getX() + 10, dash.getY(), 155, 20);
 		privacyPolicy.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		//Close button
