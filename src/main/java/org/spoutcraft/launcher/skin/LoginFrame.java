@@ -345,7 +345,7 @@ public class LoginFrame extends JFrame implements KeyListener, ActionListener, M
 	private Font getFrameFont(int size) {
 		Font font;
 		try {
-			font = Font.createFont(Font.TRUETYPE_FONT, getResourceAsStream("/org/spoutcraft/launcher/resources/Raleway-ExtraLight.ttf")).deriveFont((float) size);
+			font = Font.createFont(Font.TRUETYPE_FONT, getResourceAsStream("/org/spoutcraft/launcher/resources/Ubuntu-L.ttf")).deriveFont((float) size);
 		} catch (Exception e) {
 			e.printStackTrace();
 			// Fallback

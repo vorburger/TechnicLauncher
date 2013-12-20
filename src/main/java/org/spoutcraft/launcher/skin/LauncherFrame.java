@@ -362,7 +362,7 @@ public class LauncherFrame extends JFrame implements ActionListener, KeyListener
 	public static Font getMinecraftFont(int size) {
 		Font minecraft;
 		try {
-			minecraft = Font.createFont(Font.TRUETYPE_FONT, getResourceAsStream("/org/spoutcraft/launcher/resources/minecraft.ttf")).deriveFont((float) size);
+			minecraft = Font.createFont(Font.TRUETYPE_FONT, getResourceAsStream("/org/spoutcraft/launcher/resources/Ubuntu-L.ttf")).deriveFont((float) size);
 		} catch (Exception e) {
 			e.printStackTrace();
 			// Fallback
