@@ -1,6 +1,8 @@
 Technic Launcher
 ===================
 
+__**https://github.com/TechnicPack/LauncherV3/ is the current version - this one is old & outdated.**__
+
 ## What is The Technic Launcher?
 The Technic Launcher is a Minecraft launcher designed to install and manage modpacks from the [Technic Platform][Homepage].
 Features automatic updating, custom platform pack installation, and easy simple UI design.
